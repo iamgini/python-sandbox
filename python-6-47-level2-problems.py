@@ -6,3 +6,5 @@ def has_33(nums):
     return False
 
 print (has_33([1,3,3]))
+
+#paper doll - repeat each characters 3 times in a string
