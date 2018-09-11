@@ -1,4 +1,4 @@
-# Version 2.0.0 - gineesh.mada-pparambath@t-systems.com
+# Version 2.0.0 - net.gini@gmail.com
 import os
 import socket
 import subprocess, shlex
