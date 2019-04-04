@@ -1,4 +1,4 @@
-get installed modules in python
+### Get the list of installed modules in python
 
 help("modules")
 
