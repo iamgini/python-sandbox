@@ -7,7 +7,7 @@ image: {{ article_image }}
 tags: [{% for tag in article_tags %}{{ tag }},{% endfor %}]
 ext_url: {{ article_external_url }}
 show-avatar: true
-featured: true
+featured: {{ article_featured }}
 hidden: false
 ---
 

@@ -11,7 +11,7 @@ blog_git_location = '/Users/gini/codes/ginigangadharan.github.io/_posts/'
 
 article_category_max_count = 3
 entry_update_count = 0
-
+article_featured = 'false'
 ## fetch the rss content
 #print('Number of RSS posts :', len(NewsFeed.entries))
 #entry = NewsFeed.entries[1]
@@ -26,6 +26,7 @@ while len(NewsFeed.entries) > 0:
 #while rss_feed_page_counter == 1:
 #if len(NewsFeed.entries) > 0:
   for entry in NewsFeed.entries:
+    article_featured = 'false'
 
     ## check if this author story, then take it
     if entry.author == my_author_name:
@@ -42,7 +43,10 @@ while len(NewsFeed.entries) > 0:
       article_categories = []
       try:
         for tag in entry.tags:
-          article_tags.append(tag.term)
+          article_tags.append(tag.term.lower())
+          
+          if tag.term.lower() == 'featured':
+            article_featured = 'true'
           if category_count < article_category_max_count:
             article_categories.append(tag.term)
             category_count = category_count + 1
@@ -82,7 +86,8 @@ while len(NewsFeed.entries) > 0:
                                           article_tags = article_tags,
                                           article_external_url= article_external_url,
                                           article_summary = entry.summary,
-                                          article_published_date = article_published_date
+                                          article_published_date = article_published_date,
+                                          article_featured = article_featured
                                         )
       #print(templated_output)
       
