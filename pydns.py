@@ -1,4 +1,4 @@
-# Version 2.0.0 - net.gini@gmail.com
+# Version 2.2.0 - net.gini@gmail.com
 import os
 import socket
 import subprocess, shlex
@@ -44,13 +44,13 @@ def pinghost(hostname):
     return pingStatus
 #endDef    
 
-print bcolors.INFO + 'DNS Test - ver 2.0.0.\n' + bcolors.ENDC
+print (bcolors.INFO + 'DNS Test - ver 2.2.0.\n' + bcolors.ENDC)
 timestart = "$(date)"
 counter = 0
 pingcount = 0
 dnscount = 0
 nodnscount = 0
-print  bcolors.OKBLUE + bcolors.UNDERLINE +'%-4s |%-18s |%-6s |%s' % ('No.',"Hostname","Ping","STATUS") + bcolors.ENDC
+print (bcolors.OKBLUE + bcolors.UNDERLINE +'%-4s |%-18s |%-6s |%s' % ('No.',"Hostname","Ping","STATUS") + bcolors.ENDC)
 with open(myfilename,mode='r') as varfile:
   for line in varfile:
     counter = counter + 1
@@ -78,10 +78,10 @@ with open(myfilename,mode='r') as varfile:
     #else:
       #print 'Done'
     finally:
-      print startcolor + '%-4s |%-18s |%-6s |%s' % ( counter ,line,pingResponse,statusText) + bcolors.ENDC
+      print (startcolor + '%-4s |%-18s |%-6s |%s' % ( counter ,line,pingResponse,statusText) + bcolors.ENDC)
 
 varfile.close() #close the file
 
 timeend = "$(date)"
-print bcolors.OKBLUE + "\n======================== Summary ======================================" + bcolors.ENDC
-print bcolors.OKGREEN , dnscount , "with DNS |" + bcolors.WARNING , nodnscount , "without DNS |" + bcolors.OKGREEN , pingcount , " reachable" + bcolors.ENDC
+print (bcolors.OKBLUE + "\n======================== Summary ======================================" + bcolors.ENDC)
+print (bcolors.OKGREEN , dnscount , "with DNS |" + bcolors.WARNING , nodnscount , "without DNS |" + bcolors.OKGREEN , pingcount , " reachable" + bcolors.ENDC)
