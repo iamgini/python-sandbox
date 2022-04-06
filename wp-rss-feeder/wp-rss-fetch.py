@@ -2,10 +2,13 @@ import feedparser
 from jinja2 import Template
 import string
 from bs4 import BeautifulSoup
+import os
 
 my_author_name = 'Gineesh Madapparambath'
 my_author_name_short = 'gini'
-blog_git_location = '/Users/gini/codes/ginigangadharan.github.io/_posts/'
+# blog_git_location = '/Users/gini/codes/ginigangadharan.github.io/_posts/'
+blog_git_location = os.path.expanduser('~') + '/workarea/ginigangadharan.github.io/_posts/'
+
 #rss_feed_url = 'https://www.techbeatly.com/feed/atom/?paged=3'
 #rss_feed_url = 'https://www.techbeatly.com/feed/atom/?paged=10'
 
