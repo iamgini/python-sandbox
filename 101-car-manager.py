@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # A script to manage dictionary items
 
+import json
+
+
 database_file = "car_database.db"
 database_dict = {}
 car_brands = ['Toyota', 'Audi', 'BMW'] 
@@ -20,7 +23,7 @@ def start_menu():
         add_car()
         start_menu()
     elif menu_selected == "3":
-        delete_car()
+        delete_cars()
         start_menu()
     elif menu_selected == "q":
         print("\nThank you!\n")
@@ -47,27 +50,34 @@ def add_car():
             car_make_year = input("Year of make: ")
 
             # Read file and add items
-            # db_file = open(database_file, 'r')
-            # print(db_file.read())
-            # db_file.close()
+            db_file = open(database_file, 'r')
+            current_car_list = db_file.read()
+            db_file.close()
+            if current_car_list == "":
+                car_list = {}
+            else:
+                car_list = json.loads(current_car_list)
+                
+            
+            print(car_list)
             #dict2 = {car_model_name.replace(" ","_"):{"model": car_model_name, "year": car_make_year}}
 
 
             #dict2 = { "car_list": { "brand1": [ { "model_name": "hello", "year": 2022},{"model_name": "hai", "year": 2021 }]}}
-            car_list = { car_model_name.replace(" ","_"): { "model_name": car_model_name.replace(" ","_"), "year": int(car_make_year)}}
+            # car_list = { car_model_name.replace(" ","_"): { "model_name": car_model_name.replace(" ","_"), "year": int(car_make_year), "brand": car_brand_name_selected}}
             # dict2 = { "car_list": { car_brand_name_selected: [ { "model_name": car_model_name.replace(" ","_"), "year": int(car_make_year)}]}}
-            print(car_list)
+            # print(car_list)
 
-            if 'brand1' in car_list:
-                print("brand1")
-            else:
-                car_list.update({'brand1':{}})
+            # if 'brand1' in car_list:
+            #     print("brand1")
+            # else:
+            #     car_list.update({'brand1':{}})
 
-            if 'model1' in car_list:
-                print("model1")
-            else:
-                car_list['brand1'].update({'model1':{}})
-            print(car_list)
+            # if 'model1' in car_list:
+            #     print("model1")
+            # else:
+            #     car_list['brand1'].update({'model1':{}})
+            # print(car_list)
             
 
 
@@ -77,7 +87,8 @@ def add_car():
             #car_list[car_brand_name_selected]["year"] = car_make_year
             
             # dict2({ "car_list": { "newbrand": [ { "model_name": car_model_name.replace(" ","_"), "year": int(car_make_year)}]}})
-            new_value = { "brand1": { "model2": { "model_name": "hello", "year": 2022 }}}
+            # new_value = { "brand1": { "model2": { "model_name": "hello", "year": 2022 }}}
+            new_value = { car_model_name.replace(" ","_"): { "model_name": car_model_name, "year": int(car_make_year), "brand": car_brand_name_selected}}
             # { "brand1": [{ "model_name": "hello", "year": 2022 }]}
             print(new_value)
 
@@ -85,19 +96,20 @@ def add_car():
 
             print(car_list)
 
-
-            new_value = { "brand1": { "model3": { "model_name": "hello2", "year": 2022 }}}
-            # { "brand1": [{ "model_name": "hello", "year": 2022 }]}
-            print(new_value)
+            # new_value = { "brand1": { "model3": { "model_name": "hello2", "year": 2022 }}}
+            # # { "brand1": [{ "model_name": "hello", "year": 2022 }]}
+            # print(new_value)
             
-            #car_list1 = car_list | new_value
-            car_list.update(new_value)
+            # #car_list1 = car_list | new_value
+            # car_list.update(new_value)
 
-            print(car_list)
+            # print(car_list)
 
-            # Read file
-            db_file = open(database_file, 'r')
-            print(db_file.read())
+            # Write to file
+            with open(database_file, 'w') as db_file:
+                db_file.write(json.dumps(car_list))
+            # db_file = open(database_file, 'w')
+            # db_file.write(json_dumps(car_list))
             db_file.close()
 
 
@@ -138,5 +150,32 @@ def add_car():
 # ------- add car ------------------
 def view_cars():
     print("Car List")
+    # Read file and add items
+    db_file = open(database_file, 'r')
+    car_list = json.loads(db_file.read())
+    #current_car_list = db_file.read()
+    db_file.close()
+
+    #for idx, cars in current_car_list:
+    for idx, car in enumerate(sorted(car_list)):
+        print(idx + 1, ":", car)
+
+def delete_cars():
+    view_cars()
+    car_to_be_deleted = input("Enter the number to delete the car: ")
+    db_file = open(database_file, 'r')
+    car_list = json.loads(db_file.read())
+    #current_car_list = db_file.read()
+    db_file.close()
+    print(sorted(car_list)[int(car_to_be_deleted)-1])
+    #car_name_to_delete = car_list[int(car_to_be_deleted)-1]
+    
+    car_list.pop(sorted(car_list)[int(car_to_be_deleted)-1], None)
+    #del car_list[sorted(car_list)[int(car_to_be_deleted)-1]]
+    print(car_list)
+
+    with open(database_file, 'w') as db_file:
+        db_file.write(json.dumps(car_list))
+    db_file.close()
 
 start_menu()
